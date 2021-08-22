@@ -6,21 +6,17 @@ export function App(): JSX.Element {
   React.useEffect(() => {
     const ctx = cRef.current.getContext('2d');
 
-    ctx.beginPath();
-    ctx.moveTo(175, 150);
-    ctx.lineTo(200, 175);
-    ctx.lineTo(200, 125);
-    ctx.fill();
+    const rectangle = new Path2D();
+    rectangle.rect(10, 10, 50, 50);
 
-    ctx.beginPath();
-    ctx.arc(75, 75, 50, 0, Math.PI * 2, true); // Outer circle
-    ctx.moveTo(110, 75);
-    ctx.arc(75, 75, 35, 0, Math.PI, false);  // Mouth (clockwise)
-    ctx.moveTo(65, 65);
-    ctx.arc(60, 65, 5, 0, Math.PI * 2, true);  // Left eye
-    ctx.moveTo(95, 65);
-    ctx.arc(90, 65, 5, 0, Math.PI * 2, true);  // Right eye
-    ctx.stroke();
+    const circle = new Path2D();
+    circle.arc(100, 35, 25, 0, 2 * Math.PI);
+
+    ctx.stroke(rectangle);
+    ctx.fill(circle);
+
+    const svg = new Path2D('M10 10 h 80 v 80 h -80 Z');
+    ctx.stroke(svg)
   }, []);
 
   return (
