@@ -6,17 +6,19 @@ export function App(): JSX.Element {
   React.useEffect(() => {
     const ctx = cRef.current.getContext('2d');
 
-    const rectangle = new Path2D();
-    rectangle.rect(10, 10, 50, 50);
+    const g1 = ctx.createLinearGradient(0, 0, 0, 150);
+    g1.addColorStop(0, '#00ABEB');
+    g1.addColorStop(0.5, '#fff');
+    g1.addColorStop(0.5, '#26C000');
+    g1.addColorStop(1, '#fff');
+    ctx.fillStyle = g1;
+    ctx.fillRect(10, 10, 130, 130);
 
-    const circle = new Path2D();
-    circle.arc(100, 35, 25, 0, 2 * Math.PI);
-
-    ctx.stroke(rectangle);
-    ctx.fill(circle);
-
-    const svg = new Path2D('M10 10 h 80 v 80 h -80 Z');
-    ctx.stroke(svg)
+    const g2 = ctx.createLinearGradient(0, 50, 0, 95);
+    g2.addColorStop(0.5, '#000');
+    g2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.strokeStyle = g2;
+    ctx.strokeRect(150, 50, 50, 50);
   }, []);
 
   return (
