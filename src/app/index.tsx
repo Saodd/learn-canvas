@@ -6,19 +6,11 @@ export function App(): JSX.Element {
   React.useEffect(() => {
     const ctx = cRef.current.getContext('2d');
 
-    const g1 = ctx.createLinearGradient(0, 0, 0, 150);
-    g1.addColorStop(0, '#00ABEB');
-    g1.addColorStop(0.5, '#fff');
-    g1.addColorStop(0.5, '#26C000');
-    g1.addColorStop(1, '#fff');
-    ctx.fillStyle = g1;
-    ctx.fillRect(10, 10, 130, 130);
-
-    const g2 = ctx.createLinearGradient(0, 50, 0, 95);
-    g2.addColorStop(0.5, '#000');
-    g2.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.strokeStyle = g2;
-    ctx.strokeRect(150, 50, 50, 50);
+    ctx.beginPath();
+    ctx.arc(50, 50, 30, 0, Math.PI * 2, true);
+    ctx.arc(50, 50, 15, 0, Math.PI * 2, true);
+    ctx.arc(50, 50, 5, 0, Math.PI * 2, true);
+    ctx.fill('evenodd');
   }, []);
 
   return (
