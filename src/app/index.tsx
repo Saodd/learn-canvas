@@ -10,7 +10,7 @@ export function App(): JSX.Element {
     img.onload = function () {
       for (let x = 0; x < 4; x++) {
         for (let y = 0; y < 3; y++) {
-          ctx.drawImage(img, x * 16, y * 16, 16, 16);
+          ctx.drawImage(img, 16, 16, 32, 32, x * 32, y * 32, 32, 32);
         }
       }
     };
