@@ -8,14 +8,11 @@ export function App(): JSX.Element {
 
     ctx.fillStyle = 'red';
     ctx.save();
-    for (let i = 0; i < 3; i++) {
-      ctx.translate(0, 50); // 坐标系相对向下移动50
-      ctx.save();
-      for (let j = 0; j < 3; j++) {
-        ctx.translate(50, 0); // 坐标系相对向右移动50
-        ctx.fillRect(0, 0, 25, 25);
-      }
-      ctx.restore();
+    ctx.translate(200, 200);
+    for (let i = 0; i < 8; i++) {
+      ctx.fillRect(50, 0, 25, 25);
+      ctx.rotate((Math.PI / 180) * 45); // 顺时针旋转45度
+      ctx.scale(1.1, 1.1); // 坐标轴放大1.1倍
     }
     ctx.restore();
   }, []);
