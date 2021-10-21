@@ -6,15 +6,15 @@ export function App(): JSX.Element {
   React.useEffect(() => {
     const ctx = cRef.current.getContext('2d');
 
-    ctx.fillStyle = 'red';
-    ctx.save();
-    ctx.translate(200, 200);
-    for (let i = 0; i < 8; i++) {
-      ctx.fillRect(50, 0, 25, 25);
-      ctx.rotate((Math.PI / 180) * 45); // 顺时针旋转45度
-      ctx.scale(1.1, 1.1); // 坐标轴放大1.1倍
+    const sin = Math.sin(Math.PI / 6);
+    const cos = Math.cos(Math.PI / 6);
+    ctx.translate(100, 100);
+    for (let i = 0; i < 12; i++) {
+      const c = Math.floor(255 / 13 * i);
+      ctx.fillStyle = `rgb(${c},${c},${c})`;
+      ctx.fillRect(0, 0, 100, 10);
+      ctx.transform(cos, sin, -sin, cos, 0, 0);
     }
-    ctx.restore();
   }, []);
 
   return (
