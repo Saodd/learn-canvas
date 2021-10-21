@@ -6,9 +6,13 @@ export function App(): JSX.Element {
   React.useEffect(() => {
     const ctx = cRef.current.getContext('2d');
 
-    ctx.font = '48px serif';
-    ctx.fillText('Hello world', 10, 50);
-    ctx.strokeText('Hello world', 10, 100);
+    ctx.strokeRect(10,50,500,50)
+    ctx.font = '50px serif';
+    ctx.textBaseline='bottom'
+    ctx.fillText('Hello world 啊', 10, 100);
+
+    const text = ctx.measureText('foo');
+    console.log(text.width);
   }, []);
 
   return (
