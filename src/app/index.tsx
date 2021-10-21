@@ -6,13 +6,15 @@ export function App(): JSX.Element {
   React.useEffect(() => {
     const ctx = cRef.current.getContext('2d');
 
-    ctx.strokeRect(10,50,500,50)
-    ctx.font = '50px serif';
-    ctx.textBaseline='bottom'
-    ctx.fillText('Hello world 啊', 10, 100);
-
-    const text = ctx.measureText('foo');
-    console.log(text.width);
+    const img = new Image();
+    img.onload = function () {
+      for (let x = 0; x < 4; x++) {
+        for (let y = 0; y < 3; y++) {
+          ctx.drawImage(img, x * 16, y * 16, 16, 16);
+        }
+      }
+    };
+    img.src = '/favicon.ico';
   }, []);
 
   return (
