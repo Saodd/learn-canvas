@@ -29,8 +29,8 @@ module.exports = {
       favicon: './src/favicon.ico',
     }),
   ],
-  mode: 'production',
-  // devtool: "inline-source-map",
+  mode: 'development',
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -83,5 +83,16 @@ module.exports = {
     'axios': 'axios',
     'react': 'React',
     'react-dom': 'ReactDOM',
+  },
+  devServer: {
+    host: '0.0.0.0',
+    port: 7000,
+    client: {
+      webSocketURL: 'ws://localhost:7000/ws',
+    },
+    historyApiFallback: {
+      disableDotRule: true,
+    },
+    allowedHosts: 'all',
   },
 };
