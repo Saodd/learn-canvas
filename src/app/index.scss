@@ -1,3 +1,16 @@
-.myCanvas {
-  border: 1px solid black;
+.body {
+  background: 0 -100px repeat-x url(https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images/bg_gallery.png) #4F191A;
+  margin: 10px;
+
+  img {
+    display: none;
+  }
+
+  table {
+    margin: 0 auto;
+  }
+
+  td {
+    padding: 15px;
+  }
 }
