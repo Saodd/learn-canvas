@@ -6,11 +6,9 @@ export function App(): JSX.Element {
   React.useEffect(() => {
     const ctx = cRef.current.getContext('2d');
 
-    ctx.beginPath();
-    ctx.arc(50, 50, 30, 0, Math.PI * 2, true);
-    ctx.arc(50, 50, 15, 0, Math.PI * 2, true);
-    ctx.arc(50, 50, 5, 0, Math.PI * 2, true);
-    ctx.fill('evenodd');
+    ctx.font = '48px serif';
+    ctx.fillText('Hello world', 10, 50);
+    ctx.strokeText('Hello world', 10, 100);
   }, []);
 
   return (
