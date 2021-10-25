@@ -5,55 +5,9 @@ export function App(): JSX.Element {
   const ref = React.useRef<HTMLDivElement>();
   React.useEffect(() => {
     const canvas = ref.current.children[0] as HTMLCanvasElement;
-    const width = 800;
-    const ctx = canvas.getContext('2d');
-    // 黑色背景
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, width, width);
-    // 圆形视窗
-    ctx.beginPath();
-    ctx.arc(width / 2, width / 2, (width / 2) * 0.95, 0, Math.PI * 2, true);
-    ctx.clip();
-    // 视窗背景
-    {
-      const lingrad = ctx.createLinearGradient(0, width / 4, width, (width / 4) * 3);
-      lingrad.addColorStop(0, '#232256');
-      lingrad.addColorStop(1, '#143778');
-      ctx.fillStyle = lingrad;
-      ctx.fillRect(0, 0, width, width);
-    }
-    // 准备星星
-    const star = document.createElement('canvas');
-    {
-      const r = 6;
-      star.setAttribute('width', (r * 2).toFixed());
-      star.setAttribute('height', (r * 2).toFixed());
-      const ctx = star.getContext('2d');
-      ctx.translate(r, r);
-      ctx.fillStyle = 'white';
-      ctx.beginPath();
-      ctx.moveTo(r, 0);
-      for (let i = 0; i < 9; i++) {
-        ctx.rotate(Math.PI / 5);
-        if (i % 2 === 0) {
-          ctx.lineTo((r / 0.525731) * 0.200811, 0);
-        } else {
-          ctx.lineTo(r, 0);
-        }
-      }
-      ctx.closePath();
-      ctx.fill();
-    }
-    // 复制星星
-    for (let i = 0; i < 100; i++) {
-      ctx.save();
-      ctx.translate(Math.random() * width, Math.random() * width);
-      ctx.rotate(Math.random() * Math.PI);
-      const scale = Math.random() + 0.5;
-      ctx.scale(scale, scale);
-      ctx.drawImage(star, 0, 0);
-      ctx.restore();
-    }
+    ctx = canvas.getContext('2d');
+    init();
+    window.requestAnimationFrame(draw);
   }, []);
 
   return (
@@ -63,4 +17,63 @@ export function App(): JSX.Element {
       </canvas>
     </div>
   );
+}
+
+const src = new Map<string, HTMLImageElement>();
+let ctx: CanvasRenderingContext2D = null;
+
+function init() {
+  const BASE = 'https://yari-demos.prod.mdn.mozit.cloud/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations';
+
+  const sun = new Image();
+  const moon = new Image();
+  const earth = new Image();
+
+  sun.src = BASE + '/canvas_sun.png';
+  moon.src = BASE + '/canvas_moon.png';
+  earth.src = BASE + '/canvas_earth.png';
+
+  src.set('sun', sun);
+  src.set('moon', moon);
+  src.set('earth', earth);
+}
+
+function draw() {
+  const now = new Date();
+  // console.log(now.getSeconds());
+  ctx.save();
+  ctx.clearRect(0, 0, 800, 800);
+  {
+    // 太阳
+    ctx.drawImage(src.get('sun'), 0, 0, 800, 800);
+  }
+  {
+    // 轨道
+    ctx.save();
+    ctx.strokeStyle = 'rgba(0, 153, 255, 0.4)';
+    ctx.beginPath();
+    ctx.arc(400, 400, 300, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+  {
+    // 地球
+    ctx.save();
+    ctx.translate(400, 400);
+    const angle = ((2 * Math.PI) / 60) * now.getSeconds() + ((2 * Math.PI) / 60 / 1000) * now.getMilliseconds();
+    ctx.rotate(angle);
+    ctx.translate(300, 0);
+    ctx.drawImage(src.get('earth'), -12, -12,24,24);  // 地球直径24
+    {
+      // 月球
+      ctx.save();
+      ctx.rotate(-angle + angle * 10);
+      ctx.drawImage(src.get('moon'), 24, 0);  // 月球轨道半径24
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  ctx.restore();
+  window.requestAnimationFrame(draw);
 }
