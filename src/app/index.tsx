@@ -9,11 +9,20 @@ export function App(): JSX.Element {
     init();
     window.requestAnimationFrame(draw);
   }, []);
+  React.useEffect(() => {
+    const canvas = ref.current.children[1] as HTMLCanvasElement;
+    const ctx1 = canvas.getContext('2d');
+    ctx1.fillStyle = 'red';
+    ctx1.fillRect(0, 0, 50, 50);
+  });
 
   return (
     <div className={styles.body} ref={ref}>
-      <canvas width={800} height={800}>
+      <canvas width={800} height={800} style={{ zIndex: 1 }}>
         请使用最新的浏览器
+      </canvas>
+      <canvas width={800} height={800} style={{ zIndex: 2 }}>
+        （这是第二层）
       </canvas>
     </div>
   );
